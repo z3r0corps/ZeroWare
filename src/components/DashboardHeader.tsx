@@ -1,20 +1,9 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
-import { ChevronDown, Settings, LogOut } from 'lucide-react'
-import { useUser, UserButton, useClerk } from '@clerk/nextjs'
+import { UserButton } from '@clerk/nextjs'
 
 export default function DashboardHeader() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const { user } = useUser()
-  const { signOut } = useClerk()
-
-  const handleLogout = () => {
-    setIsDropdownOpen(false)
-    signOut({ redirectUrl: '/' })
-  }
-
   return (
     <header className="bg-black border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,98 +17,77 @@ export default function DashboardHeader() {
           </div>
 
           {/* Navigation and User Menu */}
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center">
             {/* Navigation - All tabs visible in dashboard */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex items-center space-x-12 mr-12">
               <Link 
                 href="/dashboard" 
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm uppercase tracking-wide"
               >
                 Dashboard
               </Link>
               <Link 
                 href="/dashboard/store" 
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm uppercase tracking-wide"
               >
                 Store
               </Link>
               <Link 
                 href="/dashboard/my-keys" 
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm uppercase tracking-wide"
               >
                 My Keys
               </Link>
               <Link 
                 href="/dashboard/downloads" 
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm uppercase tracking-wide"
               >
                 Downloads
               </Link>
               <Link 
                 href="/dashboard/status" 
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm uppercase tracking-wide"
               >
                 Status
               </Link>
               <Link 
                 href="/dashboard/support" 
-                className="text-white hover:text-gray-300 transition-colors"
+                className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm uppercase tracking-wide"
               >
                 Support
               </Link>
             </nav>
 
-            {/* User Menu - Next to Dashboard */}
+            {/* User Menu - Using Clerk's UserButton with custom styling */}
             <div className="relative">
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors"
-              >
-                <UserButton 
-                  appearance={{
-                    elements: {
-                      avatarBox: "w-6 h-6"
-                    }
-                  }}
-                />
-                <span className="hidden md:block font-medium">{user?.firstName || 'User'}</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {/* Dropdown Menu */}
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg border border-gray-800 z-50">
-                  <div className="py-1">
-                    <Link
-                      href="/dashboard/settings"
-                      className="flex items-center px-4 py-2 text-sm text-white hover:bg-gray-900 transition-colors"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      <Settings className="w-4 h-4 mr-3" />
-                      Settings
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center w-full px-4 py-2 text-sm text-white hover:bg-gray-900 transition-colors"
-                    >
-                      <LogOut className="w-4 h-4 mr-3" />
-                      Logout
-                    </button>
-                  </div>
-                </div>
-              )}
+              <UserButton 
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: "w-8 h-8",
+                    userButtonPopoverCard: "bg-black border border-green-500/30 shadow-xl",
+                    userButtonPopoverActionButton: "text-white hover:bg-green-500/10 transition-colors",
+                    userButtonPopoverActionButtonText: "text-white",
+                    userButtonPopoverFooter: "hidden",
+                    userButtonPopoverHeaderTitle: "text-white font-semibold",
+                    userButtonPopoverHeaderSubtitle: "text-gray-400",
+                    userButtonPopoverMainIdentifier: "text-white",
+                    userButtonPopoverSecondaryIdentifier: "text-gray-400",
+                    userButtonPopoverFooterAction: "text-green-500 hover:text-green-400 transition-colors",
+                    userButtonPopoverFooterActionText: "text-green-500 hover:text-green-400 transition-colors"
+                  },
+                  variables: {
+                    colorPrimary: "#22c55e",
+                    colorBackground: "#000000",
+                    colorText: "#ffffff",
+                    colorTextSecondary: "#9ca3af"
+                  }
+                }}
+                afterSignOutUrl="/"
+              />
             </div>
           </div>
         </div>
       </div>
-
-      {/* Click outside to close dropdown */}
-      {isDropdownOpen && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setIsDropdownOpen(false)}
-        />
-      )}
     </header>
   )
 }

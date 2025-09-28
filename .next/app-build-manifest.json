@@ -21,10 +21,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/dashboard/page.js"
     ],
-    "/dashboard/status/page": [
+    "/dashboard/settings/[[...rest]]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/status/page.js"
+      "static/chunks/app/dashboard/settings/[[...rest]]/page.js"
     ],
     "/dashboard/store/page": [
       "static/chunks/webpack.js",
@@ -41,15 +41,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/dashboard/downloads/page.js"
     ],
+    "/dashboard/status/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/dashboard/status/page.js"
+    ],
     "/dashboard/support/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/dashboard/support/page.js"
-    ],
-    "/dashboard/settings/[[...rest]]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/settings/[[...rest]]/page.js"
     ]
   }
 }
